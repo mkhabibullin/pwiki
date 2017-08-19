@@ -11,7 +11,7 @@ namespace pwiki.Controllers
         [Route("home/")]
         public IActionResult Index()
         {
-            return Ok("Hello World from a controller(home/)");
+            return Ok("Hello World from a controller");
         }
     }
 }
