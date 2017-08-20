@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,23 +52,14 @@ namespace pwiki
 
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    c.SwaggerDoc(description.GroupName, new Info
-                    {
-                        Title = $"pwiki API {description.ApiVersion}",
-                        Version = description.ApiVersion.ToString(),
-                        Contact = new Contact
-                        {
-                            Name = "Khabibullin Marat",
-                            Email = "marat-011@yandex.ru",
-                            Url = "i2x2.net"
-                        }
-                    });
+                    c.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
                 }
 
-                //Set the comments path for the swagger json and ui.
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "pwiki.xml");
-                c.IncludeXmlComments(xmlPath);
+                // add a custom operation filter which sets default values
+                c.OperationFilter<SwaggerDefaultValues>();
+
+                // integrate xml comments
+                c.IncludeXmlComments(XmlCommentsFilePath);
             });
 
             #endregion
@@ -109,11 +101,46 @@ namespace pwiki
             {
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"API {description.GroupName.ToUpperInvariant()}");
+                    c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"{description.GroupName.ToUpperInvariant()}");
                 }
             });
 
             #endregion
+        }
+
+        static string XmlCommentsFilePath
+        {
+            get
+            {
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                return Path.Combine(basePath, fileName);
+            }
+        }
+
+        static Info CreateInfoForApiVersion(ApiVersionDescription description)
+        {
+            var info = new Info()
+            {
+                Title = $"pwiki API {description.ApiVersion}",
+                Version = description.ApiVersion.ToString(),
+                Description = "need to describe",
+                Contact = new Contact
+                {
+                    Name = "Khabibullin Marat",
+                    Email = "marat-011@yandex.ru",
+                    Url = "i2x2.net"
+                },
+                TermsOfService = "pwiki",
+                License = new License { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
+            };
+
+            if (description.IsDeprecated)
+            {
+                info.Description += " This API version has been deprecated.";
+            }
+
+            return info;
         }
     }
 }

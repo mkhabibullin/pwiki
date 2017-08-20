@@ -11,6 +11,7 @@ namespace pwiki.Controllers
     public class HomeController : Controller
     {
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public IActionResult Index()
         {
             return Ok("Hello World from a controller - V1");
