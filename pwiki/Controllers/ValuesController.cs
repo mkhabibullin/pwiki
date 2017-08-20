@@ -8,11 +8,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace pwiki.Controllers
 {
+    /// <summary>
+    /// Test Controller
+    /// </summary>
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
         // GET: api/values
+        /// <summary>
+        /// Test GET Method
+        /// </summary>
+        /// <remarks>
+        /// NOTE: There is some test info here. 
+        /// Only for test Swagger
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        /// <returns>Return some constants</returns>
         [HttpGet]
+        [ProducesResponseType(typeof(string[]), 201)]
+        [ProducesResponseType(typeof(string), 400)]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
