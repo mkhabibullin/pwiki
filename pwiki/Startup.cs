@@ -38,6 +38,7 @@ namespace pwiki
             app.UseMvc();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
             {
