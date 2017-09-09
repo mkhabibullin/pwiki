@@ -53,8 +53,8 @@ namespace pwiki
                     c.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
                 }
 
-                // add a custom operation filter which sets default values
-                c.OperationFilter<SwaggerDefaultValues>();
+                //// add a custom operation filter which sets default values
+                //c.OperationFilter<SwaggerDefaultValues>();
 
                 // integrate xml comments
                 c.IncludeXmlComments(XmlCommentsFilePath);
