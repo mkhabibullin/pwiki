@@ -28,7 +28,7 @@ namespace pwiki.Controllers.v1
         [ProducesResponseType(typeof(string), 400)]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "value3 - test" };
         }
 
         // GET api/values/5
