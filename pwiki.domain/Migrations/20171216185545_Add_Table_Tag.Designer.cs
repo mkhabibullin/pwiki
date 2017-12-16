@@ -11,9 +11,10 @@ using System;
 namespace pwiki.domain.Migrations
 {
     [DbContext(typeof(PwikiDbContext))]
-    partial class PwikiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171216185545_Add_Table_Tag")]
+    partial class Add_Table_Tag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,24 +28,9 @@ namespace pwiki.domain.Migrations
 
                     b.Property<string>("Text");
 
-                    b.Property<string>("Title");
-
                     b.HasKey("Id");
 
                     b.ToTable("Notes");
-                });
-
-            modelBuilder.Entity("pwiki.domain.Models.NoteTag", b =>
-                {
-                    b.Property<int>("NoteId");
-
-                    b.Property<int>("TagId");
-
-                    b.HasKey("NoteId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("NoteTags");
                 });
 
             modelBuilder.Entity("pwiki.domain.Models.Tag", b =>
@@ -54,22 +40,20 @@ namespace pwiki.domain.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("NoteId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("NoteId");
 
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("pwiki.domain.Models.NoteTag", b =>
+            modelBuilder.Entity("pwiki.domain.Models.Tag", b =>
                 {
                     b.HasOne("pwiki.domain.Models.Note", "Note")
                         .WithMany("Tags")
-                        .HasForeignKey("NoteId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("pwiki.domain.Models.Tag", "Tag")
-                        .WithMany("Notes")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("NoteId");
                 });
 #pragma warning restore 612, 618
         }

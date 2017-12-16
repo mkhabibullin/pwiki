@@ -11,9 +11,10 @@ using System;
 namespace pwiki.domain.Migrations
 {
     [DbContext(typeof(PwikiDbContext))]
-    partial class PwikiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171216193903_Add_Tables_Tags_NoteTags")]
+    partial class Add_Tables_Tags_NoteTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +27,6 @@ namespace pwiki.domain.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Text");
-
-                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 

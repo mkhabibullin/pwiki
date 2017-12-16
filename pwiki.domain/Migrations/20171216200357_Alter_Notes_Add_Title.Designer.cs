@@ -11,9 +11,10 @@ using System;
 namespace pwiki.domain.Migrations
 {
     [DbContext(typeof(PwikiDbContext))]
-    partial class PwikiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171216200357_Alter_Notes_Add_Title")]
+    partial class Alter_Notes_Add_Title
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

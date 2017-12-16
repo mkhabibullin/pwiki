@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using pwiki.Controllers.v1.Dto;
+using pwiki.domain;
+using pwiki.domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using pwiki.domain;
-using pwiki.domain.Models;
 
 namespace pwiki.Controllers.v1
 {
@@ -27,6 +26,41 @@ namespace pwiki.Controllers.v1
         public IEnumerable<Note> GetNotes()
         {
             return _context.Notes;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNote([FromBody]AddNoteDto note)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IList<NoteTag> tags = new List<NoteTag>();
+
+            if (note.Tags.Any())
+            {
+                foreach(var t in note.Tags)
+                {
+                    var tag = await _context.Tags.FirstOrDefaultAsync(x => x.Name.Equals(t, System.StringComparison.InvariantCultureIgnoreCase));
+                    if(tag == null)
+                    {
+                        tag = new Tag { Name = t };
+                    }
+                    tags.Add(new NoteTag { Tag = tag });
+                }
+            }
+
+            var newNote = new Note
+            {
+                Text = note.Text,
+                Tags = tags
+            };
+
+            _context.Add(newNote);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetNote", new { id = newNote.Id }, note);
         }
 
         // GET: api/Notes/5
@@ -82,22 +116,7 @@ namespace pwiki.Controllers.v1
 
             return NoContent();
         }
-
-        // POST: api/Notes
-        [HttpPost]
-        public async Task<IActionResult> PostNote([FromBody] Note note)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Notes.Add(note);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetNote", new { id = note.Id }, note);
-        }
-
+        
         // DELETE: api/Notes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNote([FromRoute] int id)

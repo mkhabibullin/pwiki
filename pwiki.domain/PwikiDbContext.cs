@@ -10,5 +10,17 @@ namespace pwiki.domain
         }
 
         public DbSet<Note> Notes { get; set; }
+
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<NoteTag> NoteTags { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<NoteTag>()
+                .HasKey(t => new { t.NoteId, t.TagId });
+        }
     }
 }
