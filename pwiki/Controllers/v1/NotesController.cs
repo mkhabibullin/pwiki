@@ -23,9 +23,16 @@ namespace pwiki.Controllers.v1
 
         // GET: api/Notes
         [HttpGet]
-        public IEnumerable<Note> GetNotes()
+        public async Task<IActionResult> GetNotes()
         {
-            return _context.Notes;
+            var notes = _context.Notes.Include(x => x.Tags).Select(n => new NoteDto {
+                Id = n.Id,
+                Text = n.Text,
+                Title = n.Title,
+                Tags = n.Tags.Select(nt => nt.Tag.Name)
+            });
+
+            return Ok(notes);
         }
 
         [HttpPost]
@@ -53,6 +60,7 @@ namespace pwiki.Controllers.v1
 
             var newNote = new Note
             {
+                Title = note.Title,
                 Text = note.Text,
                 Tags = tags
             };
