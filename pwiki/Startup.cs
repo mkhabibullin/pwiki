@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using NLog;
+using NLog.Extensions.Logging;
 using pwiki.domain;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -31,7 +33,7 @@ namespace pwiki
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PwikiDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<PwikiDbContext>(options => options.UseSqlServer(ConnectionString));
 
             // format the version as "'v'major[.minor][-status]"
             services.AddMvcCore().AddVersionedApiExplorer(o => o.GroupNameFormat = "'v'VVV");
@@ -83,6 +85,8 @@ namespace pwiki
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            loggerFactory.AddNLog();
+            LogManager.Configuration.Variables["connectionString"] = ConnectionString;
 
             if (env.IsDevelopment())
             {
@@ -140,5 +144,7 @@ namespace pwiki
 
             return info;
         }
+
+        string ConnectionString => Configuration.GetConnectionString("DefaultConnection");
     }
 }
