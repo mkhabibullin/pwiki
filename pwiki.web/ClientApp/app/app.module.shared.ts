@@ -9,6 +9,9 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MaterialModule } from "./material.module";
+import 'hammerjs';
 
 @NgModule({
     declarations: [
@@ -22,6 +25,8 @@ import { CounterComponent } from './components/counter/counter.component';
         CommonModule,
         HttpModule,
         FormsModule,
+        BrowserAnimationsModule,
+        MaterialModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
