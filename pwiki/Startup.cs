@@ -34,7 +34,7 @@ namespace pwiki
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PwikiDbContext>(options => options.UseSqlServer(ConnectionString));
-
+            
             // format the version as "'v'major[.minor][-status]"
             services.AddMvcCore().AddVersionedApiExplorer(o => o.GroupNameFormat = "'v'VVV");
             services.AddMvc();
@@ -76,11 +76,24 @@ namespace pwiki
             //    });
 
             #endregion
+
+            #region CORS
+
+            services.AddCors();
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApiVersionDescriptionProvider provider)
         {
+            #region CORS
+
+            app.UseCors(builder =>
+                builder.WithOrigins("*"));
+
+            #endregion
+
             app.UseMvc();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

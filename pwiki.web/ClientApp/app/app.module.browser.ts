@@ -20,5 +20,7 @@ export class AppModule {
 }
 
 export function getBaseUrl() {
-    return document.getElementsByTagName('base')[0].href;
+    // return 'http://localhost:52384/api/v1/';
+    return 'http://api.i2x2.net/api/v1/';
+    //return document.getElementsByTagName('base')[0].href;
 }
