@@ -4,6 +4,19 @@
 
 <p *ngIf="!notes"><em>Loading...</em></p>
 
+<mat-grid-list cols="1" rowHeight="100px" *ngIf="notes">
+    <mat-grid-tile *ngFor="let n of notes">
+        <mat-card>
+            <mat-card-header>
+                {{ n.title }}
+            </mat-card-header>
+            <mat-card-content>
+                <td>{{ n.text }}
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
+
 <table class='table' *ngIf="notes">
     <thead>
         <tr>
