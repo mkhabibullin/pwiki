@@ -33,6 +33,7 @@ namespace pwiki
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            File.WriteAllText("Test.txt", "Connections string is " + ConnectionString);
             services.AddDbContext<PwikiDbContext>(options => options.UseSqlServer(ConnectionString));
             
             // format the version as "'v'major[.minor][-status]"
