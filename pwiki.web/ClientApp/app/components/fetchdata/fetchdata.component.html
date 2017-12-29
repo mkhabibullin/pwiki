@@ -16,20 +16,3 @@
         </mat-card>
     </mat-grid-tile>
 </mat-grid-list>
-
-<table class='table' *ngIf="notes">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Text</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let n of notes">
-            <td>{{ n.id }}</td>
-            <td>{{ n.title }}</td>
-            <td>{{ n.text }}</td>
-        </tr>
-    </tbody>
-</table>
