@@ -23,14 +23,20 @@ namespace pwiki.Controllers.v1
 
         // GET: api/Notes
         [HttpGet]
-        public async Task<IActionResult> GetNotes()
+        public async Task<IActionResult> GetNotes(string filter)
         {
+            var normalizedFilter = filter?.Trim().ToLower();
+
             var notes = _context.Notes.Include(x => x.Tags).Select(n => new NoteDto {
                 Id = n.Id,
                 Text = n.Text,
                 Title = n.Title,
                 Tags = n.Tags.Select(nt => nt.Tag.Name)
-            });
+            })
+            .Where(n => string.IsNullOrEmpty(normalizedFilter) 
+                || n.Text.ToLower().Contains(normalizedFilter)
+                || n.Title.ToLower().Contains(normalizedFilter)
+                || n.Tags.Any(t => t.ToLower().Contains(normalizedFilter)));
 
             return Ok(notes);
         }
