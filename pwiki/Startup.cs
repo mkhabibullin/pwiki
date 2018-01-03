@@ -90,7 +90,7 @@ namespace pwiki
             #region CORS
 
             app.UseCors(builder =>
-                builder.WithOrigins("*"));
+                builder.WithOrigins("*").WithMethods("*"));
 
             #endregion
 
