@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using pwiki.Controllers.v1.Dto;
 using pwiki.domain;
 using pwiki.domain.Models;
 using System.Collections.Generic;
@@ -22,9 +23,18 @@ namespace pwiki.Controllers.v1
 
         // GET: api/Tags
         [HttpGet]
-        public IEnumerable<Tag> GetTags()
+        public IEnumerable<TagDto> GetTags(string filter)
         {
-            return _context.Tags;
+            var normalizedFilter = filter?.Trim().ToLowerInvariant();
+            return _context.Tags
+                .Include(t => t.Notes)
+                .Where(t => string.IsNullOrEmpty(normalizedFilter) || t.Name.ToLower().Contains(normalizedFilter))
+                .Select(t => new TagDto
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    NotesCount = t.Notes.Count
+                });
         }
 
         // GET: api/Tags/5
