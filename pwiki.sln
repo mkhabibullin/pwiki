@@ -9,7 +9,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pwiki.domain", "pwiki.domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{9C6F8C49-BD60-4911-927B-0C07758DBFF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pwiki.web", "pwiki.web\pwiki.web.csproj", "{DF411E36-0465-4508-ABF6-66083CDA9D05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pwiki.web", "pwiki.web\pwiki.web.csproj", "{DF411E36-0465-4508-ABF6-66083CDA9D05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{57300CB5-BBD7-489E-8BD8-2945A4483DB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarantoolTests", "TarantoolTests\TarantoolTests.csproj", "{9723EDAF-C28C-4477-B2B7-DB2BE9269ADC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tarantool", "Tarantool", "{4F7B381E-8BA5-44FF-800D-5C6B14B7317F}"
+	ProjectSection(SolutionItems) = preProject
+		readme.txt = readme.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +42,16 @@ Global
 		{DF411E36-0465-4508-ABF6-66083CDA9D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF411E36-0465-4508-ABF6-66083CDA9D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF411E36-0465-4508-ABF6-66083CDA9D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9723EDAF-C28C-4477-B2B7-DB2BE9269ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9723EDAF-C28C-4477-B2B7-DB2BE9269ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9723EDAF-C28C-4477-B2B7-DB2BE9269ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9723EDAF-C28C-4477-B2B7-DB2BE9269ADC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9723EDAF-C28C-4477-B2B7-DB2BE9269ADC} = {57300CB5-BBD7-489E-8BD8-2945A4483DB4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB6B7EA5-D027-40BB-9247-A66D39B0B77A}
